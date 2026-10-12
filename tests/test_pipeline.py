@@ -1,3 +1,8 @@
+import json
+from pathlib import Path
+
+import pytest
+
 from agents.classifier import Classification
 from agents.recommender import Recommendation
 from agents.risk_analyzer import RiskAssessment
@@ -41,11 +46,6 @@ def test_report_contains_key_fields():
     assert "OVERALL: LOW" in report and "DECISION: GO" in report
     assert "privacy" in report and "Human review" in report
 
-
-import json
-from pathlib import Path
-
-import pytest
 
 SAMPLES = sorted((Path(__file__).resolve().parent.parent / "samples").glob("*.txt"))
 
