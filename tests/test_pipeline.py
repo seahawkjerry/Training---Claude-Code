@@ -57,3 +57,9 @@ def test_sample_flows_through_pipeline(sample):
     run_pipeline(text, client=client)
     for call in client.calls:
         assert text in call["messages"][0]["content"]
+
+
+def test_on_step_called_before_each_agent():
+    steps = []
+    run_pipeline("x", client=canned_client(), on_step=steps.append)
+    assert steps == ["classifier", "risk_analyzer", "recommender"]

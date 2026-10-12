@@ -17,9 +17,9 @@ multi-agent orchestration. Use fictional use cases only.
 - Python 3.11+, Anthropic SDK, API key from env var ANTHROPIC_API_KEY
 - Each agent returns structured JSON validated against a schema
 - Keep each agent in its own module under /agents
-- CLI first (`python main.py "use case text"`); no UI yet
+- CLI (`python main.py "use case text"`) and Streamlit UI (`streamlit run app.py`)
 - Add tests with 3 fictional sample use cases in /samples
 - Small commits, one per working step
 
 ## Out of scope for now
-Streamlit UI, databases, auth
+Databases, auth

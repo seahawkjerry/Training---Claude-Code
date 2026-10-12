@@ -16,6 +16,12 @@ python main.py "An internal tool that summarizes meeting transcripts for employe
 python main.py --file samples/02_customer_support_chatbot.txt --json
 ```
 
+## Web UI
+```bash
+.venv/Scripts/streamlit run app.py   # opens http://localhost:8501
+```
+Pick a sample or type a use case, then click **Screen use case**.
+
 ## Tests
 ```bash
 pytest            # offline, uses a fake client
