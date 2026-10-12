@@ -16,13 +16,15 @@ STEP_LABELS = {
     "recommender": "Writing the recommendation",
 }
 RATING_COLORS = {"Low": "green", "Medium": "orange", "High": "red"}
-DECISION_COLORS = {"go": "green", "conditional": "orange", "no_go": "red"}
 DECISION_LABELS = {"go": "Go", "conditional": "Conditional", "no_go": "No-go"}
 
 
 def load_samples() -> dict[str, str]:
+    # Sample files are hard-wrapped; join lines so the text area reflows naturally.
     return {
-        p.stem.split("_", 1)[1].replace("_", " ").capitalize(): p.read_text(encoding="utf-8").strip()
+        p.stem.split("_", 1)[1].replace("_", " ").capitalize(): " ".join(
+            p.read_text(encoding="utf-8").split()
+        )
         for p in sorted(SAMPLES_DIR.glob("*.txt"))
     }
 
@@ -39,17 +41,19 @@ def badge(text: str, color: str) -> str:
 def render_result(result: ScreeningResult) -> None:
     c, r, rec = result.classification, result.risks, result.recommendation
 
-    col1, col2 = st.columns(2)
-    col1.markdown(f"#### Overall risk\n## {badge(rec.overall_rating, RATING_COLORS[rec.overall_rating])}")
-    col2.markdown(
-        f"#### Decision\n## {badge(DECISION_LABELS[rec.decision], DECISION_COLORS[rec.decision])}"
+    callout = {"go": st.success, "conditional": st.warning, "no_go": st.error}[rec.decision]
+    callout(
+        f"### {rec.overall_rating} risk · {DECISION_LABELS[rec.decision]}",
+        icon={"go": "✅", "conditional": "⚠️", "no_go": "⛔"}[rec.decision],
     )
 
     st.subheader("Classification")
-    cols = st.columns(3)
-    cols[0].metric("Category", c.category.replace("_", " "))
-    cols[1].metric("Data sensitivity", c.data_sensitivity)
-    cols[2].metric("User population", c.user_population.replace("_", " "))
+    st.markdown(
+        f"| Field | Value |\n|---|---|\n"
+        f"| **Category** | {c.category.replace('_', ' ')} |\n"
+        f"| **Data sensitivity** | {c.data_sensitivity} |\n"
+        f"| **User population** | {c.user_population.replace('_', ' ')} |"
+    )
     st.caption(c.rationale)
 
     st.subheader("Risks")
