@@ -1,4 +1,4 @@
-"""CLI: python main.py "use case text" [--file PATH] [--json] [--profile NAME]"""
+"""CLI: python main.py "use case text" [--file PATH] [--json]"""
 
 import argparse
 import os
@@ -8,7 +8,6 @@ from pathlib import Path
 import anthropic
 
 from agents.base import AgentError
-from config import PROFILES
 from pipeline import ScreeningResult, run_pipeline
 
 
@@ -41,7 +40,6 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("use_case", nargs="?", help="Use-case description text")
     parser.add_argument("--file", type=Path, help="Read the use case from a text file")
     parser.add_argument("--json", action="store_true", help="Print the combined JSON result")
-    parser.add_argument("--profile", choices=sorted(PROFILES), help="Model/effort profile")
     args = parser.parse_args(argv)
 
     if args.file:
@@ -58,7 +56,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     try:
-        result = run_pipeline(text, profile=args.profile)
+        result = run_pipeline(text)
     except AgentError as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1

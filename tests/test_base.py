@@ -2,7 +2,7 @@ import pytest
 from pydantic import BaseModel
 
 from agents.base import AgentError, run_agent
-from config import AgentSettings, get_profile
+from config import AgentSettings
 from tests.conftest import FakeClient, make_response
 
 SETTINGS = AgentSettings("claude-opus-5-5", "low")
@@ -49,7 +49,3 @@ def test_usage_is_recorded():
     call(client, usage_log=log)
     assert (log[0].agent, log[0].input_tokens, log[0].output_tokens) == ("echo", 7, 3)
 
-
-def test_unknown_profile_rejected():
-    with pytest.raises(ValueError):
-        get_profile("nope")

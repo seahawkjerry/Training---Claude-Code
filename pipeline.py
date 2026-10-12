@@ -6,7 +6,7 @@ from agents.base import UsageRecord
 from agents.classifier import Classification, classify
 from agents.recommender import Recommendation, recommend
 from agents.risk_analyzer import RiskAssessment, analyze
-from config import get_profile
+from config import AGENT_SETTINGS
 
 
 class ScreeningResult(BaseModel):
@@ -19,14 +19,13 @@ class ScreeningResult(BaseModel):
 def run_pipeline(
     use_case: str,
     client=None,
-    profile: str | None = None,
     usage_log: list[UsageRecord] | None = None,
 ) -> ScreeningResult:
     if client is None:
         import anthropic
 
         client = anthropic.Anthropic()
-    settings = get_profile(profile)
+    settings = AGENT_SETTINGS
 
     classification = classify(client, use_case, settings["classifier"], usage_log)
     risks = analyze(client, use_case, classification, settings["risk_analyzer"], usage_log)

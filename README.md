@@ -22,9 +22,3 @@ pytest            # offline, uses a fake client
 pytest -m live    # real API, costs a few cents
 ```
 
-## Model profiles
-`opus-low` (default: Claude Opus 5.5, effort low) and `sonnet-medium` (Claude Sonnet 5.5,
-effort medium). Select with `--profile` or `SCREENER_PROFILE`. Compare them on the samples:
-```bash
-python eval/compare_models.py --repeats 2   # real API, roughly $1-2; writes eval/results.md
-```

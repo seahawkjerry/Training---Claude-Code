@@ -2,7 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from agents.classifier import Classification, classify
-from config import get_profile
+from config import AGENT_SETTINGS
 from tests.conftest import FakeClient, make_response
 
 CLASSIFICATION = Classification(
@@ -15,7 +15,7 @@ CLASSIFICATION = Classification(
 
 def test_classify_sends_use_case_and_returns_schema():
     client = FakeClient([make_response(CLASSIFICATION)])
-    settings = get_profile("opus-low")["classifier"]
+    settings = AGENT_SETTINGS["classifier"]
 
     result = classify(client, "Summarize team meetings", settings)
 

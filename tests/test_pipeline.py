@@ -34,13 +34,6 @@ def test_agents_run_in_order_and_hand_off_outputs():
     assert result.recommendation.decision == "go"
 
 
-def test_profile_selects_models():
-    client = canned_client()
-    run_pipeline("x", client=client, profile="sonnet-medium")
-    assert {c["model"] for c in client.calls} == {"claude-sonnet-5-5"}
-    assert {c["output_config"]["effort"] for c in client.calls} == {"medium"}
-
-
 def test_report_contains_key_fields():
     report = format_report(run_pipeline("x", client=canned_client()))
     assert "OVERALL: LOW" in report and "DECISION: GO" in report

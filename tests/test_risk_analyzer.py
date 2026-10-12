@@ -2,7 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from agents.risk_analyzer import RiskAssessment, RiskItem, analyze
-from config import get_profile
+from config import AGENT_SETTINGS
 from tests.conftest import FakeClient, make_response
 from tests.test_classifier import CLASSIFICATION
 
@@ -12,7 +12,7 @@ ASSESSMENT = RiskAssessment(privacy=LOW, security=LOW, bias=LOW, accuracy=LOW, r
 
 def test_analyze_includes_use_case_and_classification():
     client = FakeClient([make_response(ASSESSMENT)])
-    settings = get_profile("opus-low")["risk_analyzer"]
+    settings = AGENT_SETTINGS["risk_analyzer"]
 
     result = analyze(client, "Summarize team meetings", CLASSIFICATION, settings)
 

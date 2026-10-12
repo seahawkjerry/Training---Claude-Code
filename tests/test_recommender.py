@@ -2,7 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from agents.recommender import Recommendation, recommend
-from config import get_profile
+from config import AGENT_SETTINGS
 from tests.conftest import FakeClient, make_response
 from tests.test_classifier import CLASSIFICATION
 from tests.test_risk_analyzer import ASSESSMENT
@@ -18,7 +18,7 @@ RECOMMENDATION = Recommendation(
 
 def test_recommend_includes_all_prior_outputs():
     client = FakeClient([make_response(RECOMMENDATION)])
-    settings = get_profile("opus-low")["recommender"]
+    settings = AGENT_SETTINGS["recommender"]
 
     result = recommend(client, "Summarize team meetings", CLASSIFICATION, ASSESSMENT, settings)
 
