@@ -40,3 +40,27 @@ def test_report_contains_key_fields():
     report = format_report(run_pipeline("x", client=canned_client()))
     assert "OVERALL: LOW" in report and "DECISION: GO" in report
     assert "privacy" in report and "Human review" in report
+
+
+import json
+from pathlib import Path
+
+import pytest
+
+SAMPLES = sorted((Path(__file__).resolve().parent.parent / "samples").glob("*.txt"))
+
+
+def test_three_samples_exist():
+    assert len(SAMPLES) == 3
+
+
+@pytest.mark.parametrize("sample", SAMPLES, ids=lambda p: p.stem)
+def test_sample_flows_through_pipeline(sample):
+    text = sample.read_text(encoding="utf-8")
+    expected = json.loads(sample.with_suffix(".expected.json").read_text(encoding="utf-8"))
+    assert set(expected) == {"overall_rating", "decision"}
+
+    client = canned_client()
+    run_pipeline(text, client=client)
+    for call in client.calls:
+        assert text in call["messages"][0]["content"]

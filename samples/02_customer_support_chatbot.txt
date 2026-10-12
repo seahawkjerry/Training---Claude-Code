@@ -1,0 +1,5 @@
+Nimbus Home Goods (fictional), an online furniture retailer, wants a chatbot on its website
+that answers customer questions about order status, delivery windows, and return policies.
+The bot can look up orders by order number and email address and sees customer names,
+shipping addresses, and purchase history. It cannot issue refunds; refund requests are
+handed off to a human agent. It will serve customers in the US and the EU.

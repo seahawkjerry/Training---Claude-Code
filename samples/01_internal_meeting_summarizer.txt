@@ -1,0 +1,5 @@
+Brightfield Logistics (fictional) wants an internal tool that takes transcripts of its
+weekly engineering stand-up meetings and produces a short summary of decisions and action
+items. Summaries are posted to a private team channel visible only to meeting attendees.
+Transcripts contain project names and task discussions but no customer data. Engineers
+review and edit each summary before it is posted.

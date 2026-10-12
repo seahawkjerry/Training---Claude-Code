@@ -1,0 +1,5 @@
+Crescent Valley Credit Union (fictional) wants a GenAI assistant that reads small-business
+loan applications, including bank statements, tax returns, and the owner's credit report,
+and produces an approve/decline recommendation with a written justification. Loan officers
+would see the recommendation, and for applications under $25,000 the plan is to auto-approve
+or auto-decline based on the assistant's output without officer review.
